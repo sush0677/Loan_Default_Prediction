@@ -1,0 +1,6 @@
+age,workclass,education,marital_status,occupation,race,gender,hours_per_week,income,credit_score,annual_income,debt_to_income_ratio,number_of_open_accounts,loan_amount,loan_term,previous_default,default
+25,Private,Bachelors,Never-married,Tech-support,White,Male,40,<=50K,720,55000,0.2,3,10000,36,0,0
+38,Self-emp,Masters,Married,Craft-repair,Black,Female,50,>50K,650,45000,0.3,2,5000,36,1,1
+28,Gov,Bachelors,Never-married,Adm-clerical,White,Male,40,<=50K,680,60000,0.25,4,15000,36,0,0
+44,Private,Some-college,Married,Exec-managerial,Black,Female,60,>50K,550,35000,0.45,1,3000,24,1,1
+34,Self-emp,Associates,Never-married,Sales,White,Male,45,<=50K,600,40000,0.33,3,7000,36,1,1

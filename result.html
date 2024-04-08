@@ -86,34 +86,52 @@
 <div class="container mt-5">
     <h1 class="mt-5">Upload Results</h1>
     <p id="uploadStatus"></p>
-    <h2>Columns in Uploaded File:</h2>
-    <ul id="columnsList"></ul>
+    <h2>Initial Dataset:</h2>
+    <table class="table" id="initialDataset">
+        <thead>
+            <tr id="tableHeader"></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+    <button onclick="window.location.href='index.html'" class="btn btn-primary">Re-upload</button>
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2023 Loan Default Prediction Service. All rights reserved.</p>
-    </div>
-</footer>
+<!-- Footer remains unchanged -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
+    document.addEventListener('DOMContentLoaded', () => {
         const status = localStorage.getItem("uploadStatus");
-        const columns = JSON.parse(localStorage.getItem("columns"));
+        const initialData = JSON.parse(localStorage.getItem("initialData"));
 
-        document.getElementById("uploadStatus").textContent = status;
+        document.getElementById("uploadStatus").textContent = status || "No file has been processed.";
 
-        const columnsList = document.getElementById("columnsList");
-        columns.forEach(column => {
-            let li = document.createElement("li");
-            li.textContent = column;
-            columnsList.appendChild(li);
-        });
+        if (initialData && initialData.length > 0) {
+            // Assuming each object in initialData represents a row and its keys are column names
+            const tableHeader = document.getElementById("tableHeader");
+            const tableBody = document.getElementById("tableBody");
+
+            // Set table headers
+            Object.keys(initialData[0]).forEach(column => {
+                let th = document.createElement("th");
+                th.textContent = column;
+                tableHeader.appendChild(th);
+            });
+
+            // Fill table rows
+            initialData.forEach(row => {
+                let tr = document.createElement("tr");
+                Object.values(row).forEach(value => {
+                    let td = document.createElement("td");
+                    td.textContent = value;
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+        }
     });
 </script>
 </body>

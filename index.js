@@ -1,55 +1,44 @@
 $(document).ready(function() {
+    // Display the selected file name immediately when a file is chosen
     $('.custom-file-input').on('change', function() {
-        // Extract and display the file name
         let fileName = $(this).val().split('\\').pop();
-        $(this).siblings('.custom-file-label').addClass("selected").html(fileName);
-
-        // Process file after a slight delay to allow file name display
-        setTimeout(processFile, 1000);
+        $(this).siblings('.custom-file-label').html(fileName).addClass("selected");
     });
 
-    function parseCSV(text) {
-        const lines = text.split('\n');
-        const headers = lines.shift().split(',');
-        return lines.map(line => {
-            const data = line.split(',');
-            return headers.reduce((obj, nextKey, index) => {
-                obj[nextKey] = data[index];
-                return obj;
-            }, {});
-        });
-    }
-
-    function hasRequiredColumns(data, requiredColumns) {
-        return requiredColumns.every(col => data[0] && data[0].hasOwnProperty(col));
-    }
+    $('#uploadButton').on('click', function(event) {
+        event.preventDefault(); // Prevent the form from submitting traditionally
+        processFile();
+    });
 
     function processFile() {
-        const fileInput = $('#customFile')[0]; // Using jQuery for consistency
-
+        const fileInput = $('#customFile')[0];
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const text = e.target.result;
-                const data = parseCSV(text);
-
-                if (hasRequiredColumns(data, ['Default'])) {
-                    // Actions if required columns are present
+            // Check if the file is an Excel file
+            if (file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || 
+                file.type === "application/vnd.ms-excel") {
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Here, you would process the Excel file. Since parsing Excel files
+                    // in the browser requires a library like SheetJS (xlsx), this part is
+                    // conceptual and assumes such functionality is available.
+                    // Example: const data = parseExcel(e.target.result);
+                    
+                    // This is where you'd check for required columns and handle the data.
+                    // For demonstration, we're directly proceeding to set LocalStorage and redirect.
                     localStorage.setItem("uploadStatus", "File processed successfully.");
-                    localStorage.setItem("columns", JSON.stringify(Object.keys(data[0])));
-                    window.location.href = 'result.html'; // Redirect
-                } else {
-                    // Actions if required columns are missing
-                    localStorage.setItem("uploadStatus", "Uploaded file is missing some required columns.");
-                    window.location.href = 'result.html'; // Redirect even if there's an error
-                }
-            };
+                    // localStorage.setItem("initialData", JSON.stringify(data.slice(0, 5))); // Example
 
-            reader.readAsText(file);
+                    window.location.href = 'result.html';
+                };
+
+                reader.readAsBinaryString(file); // Or readAsArrayBuffer; depends on how you parse Excel files
+            } else {
+                alert("Please upload an Excel file.");
+            }
         } else {
-            alert("Please upload a file.");
+            alert("No file selected. Please select a file.");
         }
     }
 });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loan Default Prediction Service</title>
+    <title>Upload Results</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="website.html">Home</a>
+                    <a class="nav-link" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Aboutus.html">About</a>
@@ -82,51 +82,13 @@
     </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="hero-section text-center">
-    <div class="container">
-        <h1>Welcome to Loan Default Prediction Service</h1>
-        <p class="lead">Utilize advanced AI to assess your loan default risk efficiently.</p>
-    </div>
-</section>
-
-<!-- Feature Section -->
-<section class="feature-section">
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <i class="fas fa-tachometer-alt fa-3x" style="color: #007bff;"></i>
-                <h3>Fast and Accurate</h3>
-                <p>Experience rapid and precise predictions.</p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <i class="fas fa-user-cog fa-3x" style="color: #007bff;"></i>
-                <h3>Easy to Use</h3>
-                <p>Our platform is user-friendly, requiring no advanced technical knowledge.</p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <i class="fas fa-lock fa-3x" style="color: #007bff;"></i>
-                <h3>Secure and Confidential</h3>
-                <p>We prioritize your privacy and ensure the security of your data.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Upload Section -->
-<section class="upload-section">
-    <div class="container">
-        <h2>Start Your Prediction</h2>
-        <p>Upload your dataset and receive instant predictions.</p>
-        <form id="uploadForm" action="/your-backend-endpoint" method="post" enctype="multipart/form-data">
-            <div class="custom-file mb-3" style="width: 300px; margin: auto;">
-                <input type="file" class="custom-file-input" id="customFile" name="dataset" required>
-                <label class="custom-file-label" for="customFile">Choose file</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </form>
-    </div>
-</section>
+<!-- Content Section -->
+<div class="container mt-5">
+    <h1 class="mt-5">Upload Results</h1>
+    <p id="uploadStatus"></p>
+    <h2>Columns in Uploaded File:</h2>
+    <ul id="columnsList"></ul>
+</div>
 
 <!-- Footer -->
 <footer class="footer">
@@ -135,13 +97,24 @@
     </div>
 </footer>
 
-<!-- Bootstrap JS, Popper.js, and jQuery for interactive components and to make the custom file input work -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="index.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const status = localStorage.getItem("uploadStatus");
+        const columns = JSON.parse(localStorage.getItem("columns"));
 
+        document.getElementById("uploadStatus").textContent = status;
+
+        const columnsList = document.getElementById("columnsList");
+        columns.forEach(column => {
+            let li = document.createElement("li");
+            li.textContent = column;
+            columnsList.appendChild(li);
+        });
+    });
+</script>
 </body>
 </html>
-

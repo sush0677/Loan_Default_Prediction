@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loan Default Prediction Service</title>
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS for responsiveness -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            margin-top: 80px;
+            padding-top: 56px; /* Adjusted for fixed navbar */
         }
         .navbar-brand, .nav-link {
             font-weight: 700;
@@ -19,10 +19,6 @@
             background-color: #007bff;
             color: white;
             padding: 4rem 0;
-        }
-        .hero-section h1, .hero-section p {
-            margin: 0;
-            padding: 0.5rem 0;
         }
         .feature-section {
             padding: 4rem 0;
@@ -62,20 +58,20 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Loan Predictor</a>
+        <a class="navbar-brand" href="{{ url_for('home') }}">Loan Predictor</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="website.html">Home</a>
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Aboutus.html">About</a>
+                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Contact.html">Contact</a>
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
                 </li>
             </ul>
         </div>
@@ -94,21 +90,7 @@
 <section class="feature-section">
     <div class="container text-center">
         <div class="row">
-            <div class="col-lg-4 mb-3">
-                <i class="fas fa-tachometer-alt fa-3x" style="color: #007bff;"></i>
-                <h3>Fast and Accurate</h3>
-                <p>Experience rapid and precise predictions.</p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <i class="fas fa-user-cog fa-3x" style="color: #007bff;"></i>
-                <h3>Easy to Use</h3>
-                <p>Our platform is user-friendly, requiring no advanced technical knowledge.</p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <i class="fas fa-lock fa-3x" style="color: #007bff;"></i>
-                <h3>Secure and Confidential</h3>
-                <p>We prioritize your privacy and ensure the security of your data.</p>
-            </div>
+            <!-- Features -->
         </div>
     </div>
 </section>
@@ -118,7 +100,7 @@
     <div class="container">
         <h2>Start Your Prediction</h2>
         <p>Upload your dataset and receive instant predictions.</p>
-        <form id="uploadForm" action="/your-backend-endpoint" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
             <div class="custom-file mb-3" style="width: 300px; margin: auto;">
                 <input type="file" class="custom-file-input" id="customFile" name="dataset" required>
                 <label class="custom-file-label" for="customFile">Choose file</label>
@@ -135,13 +117,10 @@
     </div>
 </footer>
 
-<!-- Bootstrap JS, Popper.js, and jQuery for interactive components and to make the custom file input work -->
+<!-- Bootstrap JS, Popper.js, and jQuery for interactive components -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="index.js"></script>
-
 </body>
 </html>
-
